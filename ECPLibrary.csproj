@@ -8,14 +8,14 @@
         <UserSecretsId>dotnet-ECPLibrary-C8F49EF8-894D-4B29-94D1-FB2CD481E287</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 
-        <PackageId>Sengkhim.ECP.Infrastructure</PackageId>
-        <Version>1.1.1</Version>
+        <PackageId>SK.ECP.Infrastructure</PackageId>
+        <Version>1.0.0</Version>
         <Authors>SengkhimK</Authors>
         <Product>ECP</Product>
         <License>MIT</License>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RepositoryUrl>https://gitlab.com/Sengkhim/ecp-infrastructure</RepositoryUrl>
+        <RepositoryUrl>https://github.com/Sengkhim/ECP-Infrastructure.git</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
