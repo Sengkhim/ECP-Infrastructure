@@ -9,7 +9,7 @@
 # /Controller
 # # Ignore Properties folder
 # /Properties
- /Migrations
+/Migrations
 # /Dockerfile
 # /docker-compose.yml
 
