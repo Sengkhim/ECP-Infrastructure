@@ -103,7 +103,7 @@ public static class ServiceDiscoveryExtension
     public static void AddCoreServiceDiscovery(this IServiceCollection services)
     {
         services.AddHealthChecks()
-            .AddCheck("self", () => HealthCheckResult.Healthy(), tags: Tags);
+            .AddCheck("SELF", () => HealthCheckResult.Healthy(), tags: Tags);
 
         services.AddSingleton<IConsulClient>(new ConsulClient(options =>
         {
@@ -115,8 +115,7 @@ public static class ServiceDiscoveryExtension
             
             var host = Environment.GetEnvironmentVariable("CONSUL_HOST") ?? "host.docker.internal";
             
-            options.Address = new Uri($"http://192.168.1.8:{port}");
-            // options.Address = new Uri($"http://{host}:{port}");
+            options.Address = new Uri($"http://{host}:{port}");
         }));
         
         services.EnsureAgentRegister();
