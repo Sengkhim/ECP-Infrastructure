@@ -1,0 +1,80 @@
+﻿version: '4'
+
+services:
+    instance1:
+        build: .
+        ports:
+            - "1990:1990"
+        networks:
+            - app-network
+        depends_on:
+            - consul
+        environment:
+            - APPLICATION_NAME=ecp-service
+            - ASPNETCORE_URLS=http://0.0.0.0:1990
+            - ASPNETCORE_PORT=1990
+            - SERVICE_ID=instance1
+            - SERVICE_PORT=1990
+            - CONSUL_HOST=consul
+            - CONSUL_PORT=8500
+    
+#    instance2:
+#        build: .
+#        ports:
+#            - "1991:1991"
+#        networks:
+#            - app-network
+#        depends_on:
+#            - consul
+#        environment:
+#            - APPLICATION_NAME=ecp-service
+#            - ASPNETCORE_URLS=http://0.0.0.0:1991
+#            - ASPNETCORE_PORT=1991
+#            - SERVICE_ID=instance2
+#            - SERVICE_PORT=1991
+#            - CONSUL_HOST=http://consul:8500
+#    
+#    instance3:
+#        build: .
+#        ports:
+#            - "1992:1992"
+#        networks:
+#            - app-network
+#        depends_on:
+#            - consul
+#        environment:
+#            - APPLICATION_NAME=ecp-service
+#            - ASPNETCORE_URLS=http://0.0.0.0:1992
+#            - ASPNETCORE_PORT=1992
+#            - SERVICE_ID=instance3
+#            - SERVICE_PORT=1992
+#            - CONSUL_HOST=http://consul:8500
+#    
+#    instance4:
+#        build: .
+#        ports:
+#            - "1994:1994"
+#        networks:
+#            - app-network
+#        depends_on:
+#            - consul
+#        environment:
+#            - APPLICATION_NAME=ecp-service
+#            - ASPNETCORE_URLS=http://0.0.0.0:1994
+#            - ASPNETCORE_PORT=1994
+#            - SERVICE_ID=instance4
+#            - SERVICE_PORT=1994 
+#            - CONSUL_HOST=http://consul:8500
+    
+    consul:
+        image: hashicorp/consul:1.15
+        container_name: consul
+        ports:
+            - "8500:8500"
+        networks:
+            - app-network
+        command: "agent -dev -client=0.0.0.0"
+
+networks:
+    app-network:
+        driver: bridge
