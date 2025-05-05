@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ECPLibrary.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cedc3f881697ee8e9b577732bbf676f17197142b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+474cbafbdf4cc8c355804c92af4cd6a7a187bef5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ECPLibrary.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ECPLibrary.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
