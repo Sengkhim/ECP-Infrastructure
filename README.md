@@ -1,28 +1,6 @@
-﻿[UseAgent]
-public sealed class AgentServiceRegisterHandler(IHost host) : AgentServiceContext(host)
-{
-private readonly IHost _host = host;
+﻿1- dotnet pack
+2- dotnet nuget push bin/Release/Sengkhim.ECP.Infrastructure.1.1.1.nupkg --api-key oy2cuoymnpm52jotkpjaceptvqntgo2enpjxquqamimgeq --source https://api.nuget.org/v3/index.json
 
-    protected override AgentServiceRegistration Register()
-    {
-        var config = _host.Services.GetRequiredService<IConfiguration>();
-        var serviceId = Environment.GetEnvironmentVariable("SERVICE_ID") ?? Dns.GetHostName();
-        var serviceName = Environment.GetEnvironmentVariable("APPLICATION_NAME") ?? "ecp-service";
-        var port = config.EnsurePort();
-
-        return new AgentServiceRegistration
-        {
-            ID = serviceId,
-            Name = serviceName,
-            Address = "host.docker.internal",
-            Port = port,
-            Check = new AgentServiceCheck
-            {
-                HTTP = $"http://host.docker.internal:{port}/health",
-                Interval = TimeSpan.FromSeconds(10), 
-                Timeout = TimeSpan.FromSeconds(5),   
-                DeregisterCriticalServiceAfter = TimeSpan.FromMinutes(1)
-            }
-        };
-    }
-}
+Usage: Database connection
+builder.Services
+   .AddCoreEcpLibrary<InventoryDbContext>(builder.Configuration, "InventoryDb");

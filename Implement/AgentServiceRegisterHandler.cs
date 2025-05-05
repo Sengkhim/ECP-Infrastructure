@@ -17,16 +17,17 @@ public sealed class AgentServiceRegisterHandler(IHost host) : AgentServiceContex
         var serviceId = Environment.GetEnvironmentVariable("SERVICE_ID") ?? Dns.GetHostName();
         var serviceName = Environment.GetEnvironmentVariable("APPLICATION_NAME") ?? "ecp-service";
         var port = config.EnsurePort();
+        const string host = "host.docker.internal";
 
         return new AgentServiceRegistration
         {
             ID = serviceId,
             Name = serviceName,
-            Address = "host.docker.internal",
+            Address = host,
             Port = port,
             Check = new AgentServiceCheck
             {
-                HTTP = $"http://host.docker.internal:{port}/health",
+                HTTP = $"http://{host}:{port}/health",
                 Interval = TimeSpan.FromSeconds(10), 
                 Timeout = TimeSpan.FromSeconds(5),   
                 DeregisterCriticalServiceAfter = TimeSpan.FromMinutes(1)

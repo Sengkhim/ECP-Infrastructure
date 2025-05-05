@@ -21,7 +21,9 @@ public class EcpServiceDiscovery(
         var service = serviceEntries[Random.Shared.Next(serviceEntries.Count)];
         var protocol = configuration.GetProtocol().Trim();
         var address = service.Address.Trim();
-    
-        return $"{protocol}{address}:{service.Port}/{endpoint.Trim()}";
+        
+        return 
+            $"{protocol}{address}:{service.Port}/{endpoint.Trim()}"
+            .Replace("host.docker.internal", "localhost");
     }
 }

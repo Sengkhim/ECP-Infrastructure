@@ -5,10 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECPLibrary.Persistent;
 
-public class EcpDatabase(DbContextOptions<EcpDatabase> options, IConfigurationModeling modeling)
+public class EcpDatabase(DbContextOptions options, IConfigurationModeling modeling)
     : IdentityDbContext<IdentityUser, IdentityRole, string>(options), IEcpDatabase
 {
-    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

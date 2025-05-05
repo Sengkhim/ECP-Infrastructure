@@ -11,8 +11,7 @@ namespace ECPLibrary.Extensions;
 
 public static class ServiceDiscoveryExtension
 {
-    private const string Localhost = "127.0.0.1";
-    private const string ConsulHost = "http://localhost:8500";
+    private const string Localhost = "localhost";
     private static readonly string[] Tags = ["ready"];
 
     /// <summary>
@@ -21,7 +20,7 @@ public static class ServiceDiscoveryExtension
     /// </summary>
     /// <param name="prefix">The default value to return if no IPv4 address is found.</param>
     /// <returns>The first available IPv4 address as a string, or the provided prefix if no address is found.</returns>
-    public static string GetDns(string prefix)
+    private static string GetDns(string prefix)
     {
         return Dns.GetHostEntry(Dns.GetHostName())
             .AddressList
@@ -67,7 +66,7 @@ public static class ServiceDiscoveryExtension
     /// <param name="config">The application configuration instance.</param>
     /// <param name="prefix">A fallback value if the DNS resolution fails.</param>
     /// <returns>The fully constructed base URL (e.g., "http://192.168.1.10").</returns>
-    public static string Url(this IConfiguration config, string prefix = Localhost) 
+    private static string Url(this IConfiguration config, string prefix = Localhost) 
         => $"{config.GetProtocol()}{GetDns(prefix)}:{config.EnsurePort()}";
 
     /// <summary>
@@ -103,7 +102,7 @@ public static class ServiceDiscoveryExtension
     public static void AddCoreServiceDiscovery(this IServiceCollection services)
     {
         services.AddHealthChecks()
-            .AddCheck("self", () => HealthCheckResult.Healthy(), tags: Tags);
+            .AddCheck("SELF", () => HealthCheckResult.Healthy(), tags: Tags);
 
         services.AddSingleton<IConsulClient>(new ConsulClient(options =>
         {
@@ -113,12 +112,12 @@ public static class ServiceDiscoveryExtension
             if (!string.IsNullOrEmpty(portString) && int.TryParse(portString, out var parsedPort))
                 port = parsedPort;
             
-            var host = Environment.GetEnvironmentVariable("CONSUL_HOST") ?? "host.docker.internal";
+            var host = Environment.GetEnvironmentVariable("CONSUL_HOST") ?? Localhost;
             
             options.Address = new Uri($"http://{host}:{port}");
         }));
-        
         services.EnsureAgentRegister();
+        
         
         services.AddScoped<IEcpServiceDiscovery, EcpServiceDiscovery>();
     }

@@ -1,13 +1,19 @@
-﻿/appsettings.Development.json
-/appsettings.json
-/Program.cs
-/Test
-/Controller
-/Properties
+# # Ignore configuration files
+# /appsettings.Development.json
+# /appsettings.json
+# # Ignore Program.cs (if you want to ignore this file)
+# /Program.cs
+# # Ignore Test files
+/tests
+# # Ignore Controller folder
+# /Controller
+# # Ignore Properties folder
+# /Properties
 /Migrations
-/Dockerfile
-/docker-compose.yml
-/.dockerignore
+# /Dockerfile
+# /docker-compose.yml
+appsettings.json
+appsettings.Development.json
 
 *.rsuser
 *.suo
