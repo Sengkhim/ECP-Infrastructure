@@ -116,8 +116,8 @@ public static class ServiceDiscoveryExtension
             
             options.Address = new Uri($"http://{host}:{port}");
         }));
-        
         services.EnsureAgentRegister();
+        
         
         services.AddScoped<IEcpServiceDiscovery, EcpServiceDiscovery>();
     }
