@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+﻿using System.Net.Mime;
+using System.Text.Json;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace ECPLibrary.Extensions;
 
-public static class ApplicationExtensions
+public static class HealthCheckEndpoints
 {
     public static void UseHealthCheck(this IEndpointRouteBuilder app)
     {
@@ -11,22 +13,32 @@ public static class ApplicationExtensions
             Predicate = _ => true,
             ResponseWriter = async (context, report) =>
             {
-                context.Response.ContentType = "application/json";
-                var result = System.Text.Json.JsonSerializer.Serialize(new
+                context.Response.ContentType = MediaTypeNames.Application.Json;
+
+                var payload = new
                 {
                     status = report.Status.ToString(),
+                    totalDuration  = report.TotalDuration,
                     checks = report.Entries.Select(e => new
                     {
                         name = e.Key,
                         status = e.Value.Status.ToString(),
                         description = e.Value.Description,
                         data = e.Value.Data,
-                        tages = e.Value.Tags,
+                        tags = e.Value.Tags,
                         duration = e.Value.Duration,
-                        exception = e.Value.Exception
+                        exception = e.Value.Exception?.Message
                     })
-                });
-                await context.Response.WriteAsync(result);
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                };
+
+                var json = JsonSerializer.Serialize(payload, options);
+                await context.Response.WriteAsync(json);
             }
         });
     }
