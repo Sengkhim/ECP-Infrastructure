@@ -19,7 +19,11 @@ public static class ApplicationExtensions
                     {
                         name = e.Key,
                         status = e.Value.Status.ToString(),
-                        description = e.Value.Description
+                        description = e.Value.Description,
+                        data = e.Value.Data,
+                        tages = e.Value.Tags,
+                        duration = e.Value.Duration,
+                        exception = e.Value.Exception
                     })
                 });
                 await context.Response.WriteAsync(result);

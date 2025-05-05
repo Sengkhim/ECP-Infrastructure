@@ -1,22 +1,54 @@
-﻿version: '4'
+﻿version: '3.8'
+
+name: 'EcpCoreLib'
 
 services:
-    instance1:
-        build: .
+    
+    consul:
+        image: hashicorp/consul:1.15
+        container_name: consul
         ports:
-            - "1990:1990"
+            - "8500:8500"
         networks:
             - app-network
-        depends_on:
-            - consul
+        command: "agent -dev -client=0.0.0.0"
+        
+    xunit:
+        image: postgres:latest
+        container_name: xunit_d
+        restart: always
+        ports:
+            - "5432:5432"
         environment:
-            - APPLICATION_NAME=ecp-service
-            - ASPNETCORE_URLS=http://0.0.0.0:1990
-            - ASPNETCORE_PORT=1990
-            - SERVICE_ID=instance1
-            - SERVICE_PORT=1990
-            - CONSUL_HOST=consul
-            - CONSUL_PORT=8500
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 1688
+            POSTGRES_DB: xunit
+#        volumes:
+#            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - app-network
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U postgres -d xunit" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            
+#    instance1:
+#        build: .
+#        ports:
+#            - "1990:1990"
+#        networks:
+#            - app-network
+#        depends_on:
+#            - consul
+#        environment:
+#            - APPLICATION_NAME=ecp-service
+#            - ASPNETCORE_URLS=http://0.0.0.0:1990
+#            - ASPNETCORE_PORT=1990
+#            - SERVICE_ID=instance1
+#            - SERVICE_PORT=1990
+#            - CONSUL_HOST=consul
+#            - CONSUL_PORT=8500
     
 #    instance2:
 #        build: .
@@ -65,15 +97,7 @@ services:
 #            - SERVICE_ID=instance4
 #            - SERVICE_PORT=1994 
 #            - CONSUL_HOST=http://consul:8500
-    
-    consul:
-        image: hashicorp/consul:1.15
-        container_name: consul
-        ports:
-            - "8500:8500"
-        networks:
-            - app-network
-        command: "agent -dev -client=0.0.0.0"
+
 
 networks:
     app-network:

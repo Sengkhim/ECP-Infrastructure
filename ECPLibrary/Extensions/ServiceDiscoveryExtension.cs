@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Net.Sockets;
-using System.Reflection;
+﻿using System.Reflection;
 using Consul;
 using ECPLibrary.Core.Attributes;
 using ECPLibrary.Implement;
@@ -13,20 +11,6 @@ public static class ServiceDiscoveryExtension
 {
     private const string Localhost = "localhost";
     private static readonly string[] Tags = ["ready"];
-
-    /// <summary>
-    /// Retrieves the first available IPv4 address of the current machine. 
-    /// If no valid IPv4 address is found, returns the specified prefix.
-    /// </summary>
-    /// <param name="prefix">The default value to return if no IPv4 address is found.</param>
-    /// <returns>The first available IPv4 address as a string, or the provided prefix if no address is found.</returns>
-    private static string GetDns(string prefix)
-    {
-        return Dns.GetHostEntry(Dns.GetHostName())
-            .AddressList
-            .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)
-            ?.ToString() ?? prefix;
-    }
     
     /// <summary>
     /// Retrieves the protocol (HTTP or HTTPS) based on the ASP.NET Core configuration.
@@ -60,35 +44,6 @@ public static class ServiceDiscoveryExtension
         return 80;
     }
 
-    /// <summary>
-    /// Constructs a base URL using the configured protocol and the first available IPv4 address of the host.
-    /// </summary>
-    /// <param name="config">The application configuration instance.</param>
-    /// <param name="prefix">A fallback value if the DNS resolution fails.</param>
-    /// <returns>The fully constructed base URL (e.g., "http://192.168.1.10").</returns>
-    private static string Url(this IConfiguration config, string prefix = Localhost) 
-        => $"{config.GetProtocol()}{GetDns(prefix)}:{config.EnsurePort()}";
-
-    /// <summary>
-    /// Retrieves the deployment type from the application configuration.
-    /// </summary>
-    /// <param name="config">The application configuration instance.</param>
-    /// <returns>
-    /// <c>true</c> if the application is deployed in a Docker environment; otherwise, <c>false</c>.
-    /// </returns>
-    public static bool GetDeployType(this IConfiguration config)
-        => config.GetValue<bool>("DeployType:Docker");
-    
-    /// <summary>
-    /// Configures the web host URL based on the deployment type.
-    /// </summary>
-    /// <param name="builder">The <see cref="WebApplicationBuilder"/> used to configure the application.</param>
-    public static void HostUrl(this WebApplicationBuilder builder)
-    {
-        var host = builder.Configuration.Url();
-        builder.WebHost.UseUrls(host);
-    }
-
     public static int EnsurePort(this IConfiguration configuration)
     {
         var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT");
@@ -116,8 +71,8 @@ public static class ServiceDiscoveryExtension
             
             options.Address = new Uri($"http://{host}:{port}");
         }));
-        services.EnsureAgentRegister();
         
+        services.EnsureAgentRegister();
         
         services.AddScoped<IEcpServiceDiscovery, EcpServiceDiscovery>();
     }
@@ -126,7 +81,7 @@ public static class ServiceDiscoveryExtension
     /// Registers all classes annotated with <see cref="UseAgentAttribute"/> as singleton services.
     /// </summary>
     /// <param name="services">The IServiceCollection instance.</param>
-    private static void EnsureAgentRegister(this IServiceCollection services)
+    public static void EnsureAgentRegister(this IServiceCollection services)
     {
         Assembly.GetExecutingAssembly()
             .GetTypes()

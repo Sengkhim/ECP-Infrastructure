@@ -19,7 +19,7 @@ public static class CoreServiceCollections
     /// <returns>The modified IServiceCollection to enable method chaining.</returns>
     /// <exception cref="ArgumentNullException">Thrown when either <paramref name="services"/> or <paramref name="config"/> is null.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the connection string corresponding to <paramref name="key"/> is null or empty.</exception>
-    private static void AddDatabase<TContext>(this IServiceCollection services,
+    public static void AddDatabase<TContext>(this IServiceCollection services,
         IConfiguration config,
         string key)
         where TContext : DbContext, IEcpDatabase
@@ -35,6 +35,9 @@ public static class CoreServiceCollections
         // Register the DbContext using the Npgsql provider.
         services.AddDbContext<TContext>(options => options.UseNpgsql(connectionString));
 
+        // Map configuration EF core identity tables
+        services.AddSingleton<IConfigurationModeling, ConfigurationModeling>();
+        
         // Map the interface to the concrete DbContext.
         services.AddScoped<IEcpDatabase>(provider => provider.GetRequiredService<TContext>());
 
@@ -42,33 +45,6 @@ public static class CoreServiceCollections
         services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<TContext>()
             .AddDefaultTokenProviders();
-    }
-    
-    /// <summary>
-    /// Executes the provided setup action to configure database-related services on the given <see cref="IServiceCollection"/>.
-    /// </summary>
-    /// <param name="services">The <see cref="IServiceCollection"/> to which the database services will be added.</param>
-    /// <param name="registration">An action delegate that performs the database service registration.</param>
-    /// <exception cref="ArgumentNullException">
-    /// Thrown when either <paramref name="services"/> or <paramref name="registration"/> is null.
-    /// </exception>
-    private static void AddDatabase(this IServiceCollection services, Action<IServiceCollection> registration)
-    {
-        ArgumentNullException.ThrowIfNull(services);
-        ArgumentNullException.ThrowIfNull(registration);
-
-        registration(services);
-    }
-    
-    /// <summary>
-    /// Registers the core ECP library services by adding the configuration modeling service as a singleton.
-    /// </summary>
-    /// <param name="services">The <see cref="IServiceCollection"/> to which services are added.</param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="services"/> is null.</exception>
-    private static void AddCoreEcpLibrary(this IServiceCollection services)
-    {
-        ArgumentNullException.ThrowIfNull(services);
-        services.AddSingleton<IConfigurationModeling, ConfigurationModeling>();
     }
     
     /// <summary>
@@ -99,7 +75,6 @@ public static class CoreServiceCollections
         this IServiceCollection services, IConfiguration configuration, string key) 
         where TContext : DbContext, IEcpDatabase
     {
-        services.AddCoreEcpLibrary();
         services.AddDatabase<TContext>(configuration, key);
         services.AddUnitEcpLibrary<TContext>();
     }
@@ -122,8 +97,8 @@ public static class CoreServiceCollections
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(registration);
 
-        services.AddCoreEcpLibrary();
-        services.AddDatabase(registration);
+        registration(services);
         services.AddUnitEcpLibrary<TContext>();
+        services.AddSingleton<IConfigurationModeling, ConfigurationModeling>();
     }
 }

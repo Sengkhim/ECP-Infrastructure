@@ -1,13 +1,10 @@
 using ECPLibrary.Core.Middleware;
 using ECPLibrary.Extensions;
-using ECPLibrary.tests;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCoreServiceDiscovery();
-builder.Services
-    .AddCoreEcpLibrary<InventoryDbContext>(builder.Configuration, "InventoryDb");
 
 var app = builder.Build();
 
