@@ -15,7 +15,8 @@
 #appsettings.json
 #appsettings.Development.json
 
-Folder.DotSettings.user
+../Folder.DotSettings.user
+../NugetPub.txt
 
 *.rsuser
 *.suo
