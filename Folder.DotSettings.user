@@ -14,7 +14,7 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AWebApplication_002Ecs_002Fl_003AC_0021_003FUsers_003FASUS_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ff16564c8c4b61e6ea398fe412680c6b795b266584ccf6a362aed712dc4d2b387_003FWebApplication_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AXunitTestInvoker_002Ecs_002Fl_003AC_0021_003FUsers_003FASUS_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003Fa53b6656d53296976cb3cae7c3f3c3797af4d1063d91228a4f1dabbd5398890_003FXunitTestInvoker_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AXunitTestRunner_002Ecs_002Fl_003AC_0021_003FUsers_003FASUS_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F3d39b7365ca42b2d8c4e732f62ab42f8e55276a28f58835d74b42ccc2bc1_003FXunitTestRunner_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=21e6c73b_002D69ed_002D4aab_002D9ff2_002Dff23558c8479/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddDatabase_ThrowsWhenConnectionStringMissing" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=21e6c73b_002D69ed_002D4aab_002D9ff2_002Dff23558c8479/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddDatabase_ThrowsWhenConnectionStringMissing" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Not&gt;&#xD;
     &lt;And&gt;&#xD;
       &lt;Namespace&gt;ECPLibrary.Tests.Integrations&lt;/Namespace&gt;&#xD;
@@ -22,6 +22,6 @@
     &lt;/And&gt;&#xD;
   &lt;/Not&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=37d0a9a7_002D97f5_002D4a98_002Da8ee_002Dab5a091bde6d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;ECPLibrary.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=37d0a9a7_002D97f5_002D4a98_002Da8ee_002Dab5a091bde6d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;ECPLibrary.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\WorkSpace\Owner\CoreLib\ECPLibrary.Tests" Presentation="&amp;lt;ECPLibrary.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

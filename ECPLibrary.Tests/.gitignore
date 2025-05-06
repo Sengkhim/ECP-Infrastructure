@@ -1,23 +1,4 @@
-﻿# # Ignore configuration files
-# /appsettings.Development.json
-# /appsettings.json
-# # Ignore Program.cs (if you want to ignore this file)
-# /Program.cs
-# # Ignore Test files
-/tests
-# # Ignore Controller folder
-# /Controller
-# # Ignore Properties folder
-# /Properties
-/Migrations
-# /Dockerfile
-# /docker-compose.yml
-#appsettings.json
-#appsettings.Development.json
-
-Folder.DotSettings.user
-
-*.rsuser
+﻿*.rsuser
 *.suo
 *.user
 *.userosscache
