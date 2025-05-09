@@ -1,12 +1,10 @@
 ﻿using System.Net;
 using Consul;
 using ECPLibrary.Core.Abstraction;
-using ECPLibrary.Core.Attributes;
 using ECPLibrary.Extensions;
 
 namespace ECPLibrary.Implement;
 
-[UseAgent]
 public class AgentServiceRegisterHandler(IHost host) : AgentServiceContext(host)
 {
     private readonly IHost _agentHost = host;
